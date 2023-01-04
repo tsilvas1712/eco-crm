@@ -1,0 +1,71 @@
+version: "3.7"
+
+services:
+    # image project
+    app:
+        container_name: eco-crm-app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: tsnetwork/laravel
+     
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on: 
+            - redis
+        networks: 
+            - eco-network
+    
+    # nginx
+    nginx:
+        container_name: eco-crm-nginx
+        image: nginx:alpine
+
+        ports: 
+            - "8001:80"
+        volumes: 
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks: 
+            - eco-network
+
+    # db pgsql
+    pgsql:
+        container_name: eco-crm-pg
+        image: postgres:latest
+        
+        environment: 
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        volumes: 
+            - ./.docker/postgres/dbdata:/var/lib/postgresql/data/
+        ports: 
+            - "5433:5432"
+        networks: 
+            - eco-network
+
+    # queue
+    queue:
+        container_name: eco-crm-queue
+        image: tsnetwork/laravel
+
+        command: "php artisan queue:work"
+        volumes: 
+            - ./:/var/www
+        depends_on: 
+            - redis
+            - app
+        networks: 
+            - eco-network
+
+    # redis
+    redis:
+        container_name: eco-crm-redis
+        image: redis:latest
+        networks: 
+            - eco-network
+
+networks: 
+    eco-network:
+        driver: bridge
