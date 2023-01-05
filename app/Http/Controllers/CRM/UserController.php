@@ -88,7 +88,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified .
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
