@@ -6824,6 +6824,10 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   background-color: #007bff !important;
 }
 
+.bg-eco-dark{
+  background-color: #121727 !important;
+}
+
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {

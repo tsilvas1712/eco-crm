@@ -11,3 +11,7 @@
 .navbar-light .navbar-nav .nav-link {
     color: rgb(255 255 255 / 50%);
 }
+
+.bg-eco-dark{
+    background-color: #121727 !important;
+}

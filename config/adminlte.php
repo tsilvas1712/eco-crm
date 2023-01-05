@@ -294,12 +294,12 @@ return [
         'HOME',
         [
             'text' => 'Home',
-            'url'  => '#',
+            'url'  => '/crm',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
             'text' => 'Usuários',
-            'url'  => '#',
+            'url'  => '/crm/users',
             'icon' => 'fas fa-fw fa-users',
         ],
         'CRM',

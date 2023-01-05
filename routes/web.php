@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CRM\MainController;
+use App\Http\Controllers\CRM\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,15 @@ Route::get('/', function () {
 });
 
 
-Route::middleware('auth')->prefix('crm',)->group(function(){
-    Route::get('/',[MainController::class,'main'])->name('index');
+Route::middleware('auth')->prefix('crm', )->group(function () {
+    Route::get('/', [MainController::class,'main'])->name('main.index');
+
+    /**
+     * ROUTES USERS
+     */ 
+    Route::any('users/search',[UserController::class,'search'])->name('users.search') ;
+    Route::resource('users',UserController::class);
+ 
 });
 
 Route::get('/dashboard', function () {
