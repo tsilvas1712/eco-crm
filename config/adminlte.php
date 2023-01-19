@@ -324,6 +324,36 @@ return [
             'url'  => '#',
             'icon' => 'fas fa-fw fa-users-cog',
         ],
+        [
+            'text' => 'Categorias',
+            'icon' => 'fas fa-fw fa-clipboard-list',
+            'submenu' => [
+                [
+                    'text' => 'Contatos',
+                    'url'  => 'crm/customers/categories',
+                    'icon' => 'fas fa-fw fa-people-arrows',
+                ],
+                [
+                    'text' => 'Compromissos',
+                    'url'  => 'crm/schedules/categories',
+                    'icon' => 'fas fa-fw fa-calendar',
+                ],
+            ]
+            ],
+            [
+                'type'         => 'navbar-notification',
+                'id'           => 'my-notification',
+                'icon'         => 'fas fa-bell',
+                'url'          => 'notifications/show',
+                'topnav_right' => true,
+                'dropdown_mode'   => true,
+                'dropdown_flabel' => 'All notifications',
+                'update_cfg'   => [
+                    'url' => 'notifications/get',
+                    'period' => 15,
+                ],
+            ]
+
         
     ],
 

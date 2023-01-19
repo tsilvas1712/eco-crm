@@ -1,4 +1,4 @@
-@include('admin.includes.alerts')
+@include('CRM.includes.alerts')
 
 <div class="form-group">
     <label>Nome:</label>

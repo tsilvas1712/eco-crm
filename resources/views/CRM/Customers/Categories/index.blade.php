@@ -1,13 +1,15 @@
 @extends('adminlte::page')
 
-@section('title_prefix', 'Usuários')
+@section('title_prefix', 'Categorias de Contatos')
 
 @section('content_header')
-    <h1>Usuários <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Usuário</a></h1>
+    <h1>Categoria de Contatos <a href="{{ route('customers.categories.create') }}" class="btn btn-primary">Nova Categoria</a>
+    </h1>
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active">Usuários</li>
+        <li class="breadcrumb-item"><a href="#">Contatos</a></li>
+        <li class="breadcrumb-item active">Categoria</li>
     </ol>
 @stop
 
@@ -15,7 +17,7 @@
     <div class="container-fluid">
         <div class="card rounded-xl">
             <div class="card-header">
-                <form action="{{ route('users.search') }}" method="post" class="form form-inline">
+                <form action="{{ route('customers.categories.search') }}" method="post" class="form form-inline">
                     @csrf
                     <input type="text" name="filter">
                     <button type="submit" class="btn btn-dark">Filtrar</button>
@@ -26,20 +28,20 @@
                 <table class="table-condensed table">
                     <thead class="bg-dark">
                         <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
+                            <th>Categoria</th>
+                            <th>Descrição</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($categories as $category)
                             <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $category->category }}</td>
+                                <td>{{ $category->description }}</td>
                                 <td>
-                                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning"
-                                        title="Mostrar Registro"><i class="fa fa-eye"></i></a>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info"
+                                    <a href="{{ route('customers.categories.show', $category->id) }}"
+                                        class="btn btn-warning" title="Mostrar Registro"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('customers.categories.edit', $category->id) }}" class="btn btn-info"
                                         title="Editar Registro"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
@@ -50,9 +52,9 @@
             </div>
             <div class="card-footer">
                 @if (isset($filters))
-                    {!! $users->appends($filters)->links() !!}
+                    {!! $categories->appends($filters)->links() !!}
                 @else
-                    {!! $users->links() !!}
+                    {!! $categories->links() !!}
                 @endif
 
             </div>
