@@ -19,9 +19,14 @@ use App\Http\Controllers\CRM\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Site.welcome');
 });
 
+Route::get('/test',function(){
+    return response()->json([
+        'stuff' => phpinfo()
+    ]);
+});
 Route::get(
     'notifications/get',
     [App\Http\Controllers\CRM\NotificationController::class, 'getNotificationsData']

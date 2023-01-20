@@ -42,7 +42,7 @@
                 <div class="small-box bg-olive">
                     <div class="inner">
                         <h3>44</h3>
-                        <p>User Agendamentos Concluidos</p>
+                        <p>Agendamentos Concluidos</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
