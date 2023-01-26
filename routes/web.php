@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CRM\MainController;
 use App\Http\Controllers\CRM\UserController;
+use App\Http\Controllers\CRM\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ Route::middleware('auth')->prefix('crm', )->group(function () {
      */
 
     Route::name('customers.')->prefix('customers')->group(function () {
+        Route::any('search', [CustomerController::class,'search'])->name('search') ;
+        Route::resource('',CustomerController::class);
         /**
          * Categories
          */

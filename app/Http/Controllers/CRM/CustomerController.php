@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    protected $repository;
+
+    public function __construct(Customer $customer)
+    {
+        $this->repository = $customer;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +24,11 @@ class CustomerController extends Controller
     public function index()
     {
         //
+        $customers = $this->repository->latest()->tenantCustomer()->paginate(10);
+
+        return view('CRM.Customers.index',[
+            'customers'=> $customers,
+        ]);
     }
 
     /**
@@ -24,7 +38,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('CRM.Users.create');
     }
 
     /**
@@ -35,7 +49,13 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['tenant_id'] = auth()->user()->tenant_id;
+        $data['password'] = bcrypt($data['password']); // encrypt password
+
+        $this->repository->create($data);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -46,7 +66,11 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        if (!$user = $this->repository->tenantUser()->find($id)) {
+            return redirect()->back();
+        }
+
+        return view('CRM.Users.show', compact('user'));
     }
 
     /**
@@ -57,11 +81,15 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (!$user = $this->repository->tenantUser()->find($id)) {
+            return redirect()->back();
+        }
+
+        return view('CRM.Users.edit', compact('user'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified .
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -69,7 +97,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (!$user = $this->repository->tenantUser()->find($id)) {
+            return redirect()->back();
+        }
+
+        $data = $request->only(['name', 'email']);
+
+        if ($request->password) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -80,6 +120,33 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!$user = $this->repository->tenantUser()->find($id)) {
+            return redirect()->back();
+        }
+
+        $user->delete();
+
+        return redirect()->route('users.index');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->only('filter');
+
+        $users = $this->repository
+            ->where(function($query) use ($request) {
+                if ($request->filter) {
+                    $query->orWhere('name', 'LIKE', "%{$request->filter}%");
+                    $query->orWhere('email', $request->filter);
+                }
+            })
+            ->latest()
+            ->tenantUser()
+            ->paginate();
+
+        return view('CRM.Users.index',[
+            'users'=> $users,
+            'filters' => $filters
+        ]);
     }
 }

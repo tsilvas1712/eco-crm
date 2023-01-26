@@ -310,7 +310,7 @@ return [
         ],
         [
             'text' => 'Contatos',
-            'url'  => '#',
+            'url'  => '/crm/customers',
             'icon' => 'fas fa-fw fa-user-friends',
         ],
         [
@@ -354,7 +354,7 @@ return [
                 ],
             ]
 
-        
+
     ],
 
     /*

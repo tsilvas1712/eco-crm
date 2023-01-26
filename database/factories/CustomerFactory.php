@@ -16,11 +16,11 @@ class CustomerFactory extends Factory
      */
     public function definition()
     {
-        $cpf = $this->faker->randomNumber(3,true) + $this->faker->randomNumber(3,true)+$this->faker->randomNumber(3,true)+$this->faker->randomNumber(2,true);
+        $cpf = $this->faker->randomNumber(3,true) . $this->faker->randomNumber(3,true).$this->faker->randomNumber(3,true).$this->faker->randomNumber(2,true);
         return [
             //
             'name' => $this->faker->name(),
-            'tenant_id' => rand(1,2),
+            //'tenant_id' => rand(1,2),
             'cpf_cnpj' => $cpf,
             'gener'=> $this->faker->randomElement(['M','F']),
             'marital_status'=> $this->faker->randomElement(['C','S','D','U.E.']),
